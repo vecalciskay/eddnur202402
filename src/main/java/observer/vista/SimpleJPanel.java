@@ -34,6 +34,7 @@ public class SimpleJPanel extends JPanel
 
         VistaCuadradoSimple dibujador = new VistaCuadradoSimple(modelo);
         dibujador.dibujar(g);
+        logger.info("");
     }
 
     @Override

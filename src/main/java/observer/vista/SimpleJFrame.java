@@ -53,11 +53,43 @@ public class SimpleJFrame extends JFrame implements PropertyChangeListener {
 
         bar.add(menu);
 
+        menu = new JMenu("Acciones");
+
+        item = new JMenuItem("Animacion derecha 50px");
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuAcciones_derecha50px();
+            }
+        });
+        menu.add(item);
+
+        bar.add(menu);
+
         this.setJMenuBar(bar);
     }
 
     public void menuColor_verde() {
         modelo.setColor(Color.green);
+    }
+
+    /**
+     * Mueve el cuadrado 90px a la derecha en una animación moviendo el cuadrado 3px cada 100ms
+     */
+    public void menuAcciones_derecha50px() {
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                for (int i = 0; i < 30; i++) {
+                    modelo.setPosicion(modelo.getX() + 3, modelo.getY());
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
     }
 
     @Override
