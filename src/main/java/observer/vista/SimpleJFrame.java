@@ -79,7 +79,7 @@ public class SimpleJFrame extends JFrame implements PropertyChangeListener {
     public void menuAcciones_derecha50px() {
         Thread t = new Thread(new Runnable() {
             public void run() {
-                for (int i = 0; i < 30; i++) {
+                for (int i = 0; i < 60; i++) {
                     modelo.setPosicion(modelo.getX() + 3, modelo.getY());
                     try {
                         Thread.sleep(100);
