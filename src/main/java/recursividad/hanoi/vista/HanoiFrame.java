@@ -1,5 +1,6 @@
 package recursividad.hanoi.vista;
 
+import recursividad.hanoi.exceptions.HanoiException;
 import recursividad.hanoi.modelo.HanoiModel;
 
 import javax.swing.*;
@@ -10,13 +11,18 @@ public class HanoiFrame extends JFrame {
     public HanoiFrame() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        init();
+        try {
+            init();
+        } catch (HanoiException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
 
         this.pack();
         this.setVisible(true);
     }
 
-    private void init() {
+    private void init() throws HanoiException {
         // layout
         this.getContentPane().setLayout(new BorderLayout());
 

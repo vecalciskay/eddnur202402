@@ -1,5 +1,7 @@
 package recursividad.hanoi.modelo;
 
+import recursividad.hanoi.exceptions.HanoiException;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -18,7 +20,11 @@ public class HanoiModel {
     private Torre[] torres;
     private PropertyChangeSupport observado;
 
-    public HanoiModel(int n, int de, int a, int pp, int velocidad) {
+    public HanoiModel(int n, int de, int a, int pp, int velocidad) throws HanoiException {
+        if (n <= 0) {
+            throw new HanoiException(HanoiException.ARG_ANILLOS_POSITIVO_MESSAGE);
+        }
+
         this.n = n;
         this.de = de;
         this.a = a;
