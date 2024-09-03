@@ -24,6 +24,16 @@ public class HanoiModel {
         if (n <= 0) {
             throw new HanoiException(HanoiException.ARG_ANILLOS_POSITIVO_MESSAGE);
         }
+        if (de < 0 || a < 0 || pp < 0) {
+            throw new HanoiException(HanoiException.ARG_TORRE_POSITIVO_MESSAGE);
+        }
+        if (de > 2 || a > 2 || pp > 2) {
+            throw new HanoiException(HanoiException.ARG_TORRE_RANGO_MESSAGE);
+        }
+        if (de == a || a == pp || de == pp) {
+            throw new HanoiException(HanoiException.ARG_PARAMETRO_TORRE_MESSAGE);
+        }
+
 
         this.n = n;
         this.de = de;
