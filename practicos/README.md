@@ -6,7 +6,7 @@ de la Universidad NUR.
 
 ## Prácticos
 * [Práctico 1](tp1/README.md) a rendir el martes 20 de Agosto de 2024
-* [Práctico 2](tp2/README.md) 
+* [Práctico 2](tp2/README.md) a rendir el martes 10 de Septiembre de 2024
 * [Práctico 3](tp3/README.md) 
 * [Práctico 4](tp4/README.md) 
 * [Práctico 5](tp5/README.md) 
