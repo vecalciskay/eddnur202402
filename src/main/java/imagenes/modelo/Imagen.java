@@ -1,16 +1,49 @@
 package imagenes.modelo;
 
+import imagenes.modelo.excepciones.ImagenException;
+import imagenes.modelo.operaciones.Aclarar;
+import imagenes.modelo.operaciones.IOperacionImagen;
+import imagenes.vista.ImagenPanel;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
 
 public class Imagen {
     private int[][] pixeles;
     private int width;
     private int height;
+    private PropertyChangeSupport observado;
 
     public Imagen(int w, int h) {
         width = w;
         height = h;
         pixeles = new int[w][h];
+        observado = new PropertyChangeSupport(this);
+    }
+
+    public Imagen(File f) {
+        BufferedImage bi = null;
+        try {
+            bi = ImageIO.read(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        width = bi.getWidth();
+        height = bi.getHeight();
+
+        pixeles = new int[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                pixeles[i][j] = bi.getRGB(i, j);
+            }
+        }
+
+        observado = new PropertyChangeSupport(this);
     }
 
     public void dibujar(Graphics g) {
@@ -72,5 +105,47 @@ public class Imagen {
                 pixeles[i][200 + j] = color;
             }
         }
+    }
+
+    public void addObserver(PropertyChangeListener observador) {
+        observado.addPropertyChangeListener(observador);
+    }
+
+    public int get(int i, int j) {
+        return pixeles[i][j];
+    }
+
+    public int[] getRgb(int i, int j) {
+        int[] result = new int[3];
+        result[2] = 0x000000ff & pixeles[i][j];
+        result[1] = (0x0000ff00 & pixeles[i][j]) >> 8;
+        result[0] = (0x00ff0000 & pixeles[i][j]) >> 16;
+
+        return result;
+    }
+
+    public void setRgb(int x, int y, int r, int g, int b) {
+        int rc = r << 16;
+        int gc = g << 8;
+        int bc = b;
+        pixeles[x][y] = rc | gc | bc;
+    }
+
+    public void operacionCompletada() {
+        observado.firePropertyChange("OPERACION", true, false);
+    }
+
+    public void operacion(IOperacionImagen operacion) {
+        try {
+            operacion.hacer(this);
+        } catch (ImagenException e) {
+            throw new RuntimeException(e);
+        }
+
+        operacionCompletada();
+    }
+
+    public void setPixeles(int[][] pixeles) {
+        this.pixeles = pixeles;
     }
 }

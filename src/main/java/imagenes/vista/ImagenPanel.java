@@ -4,8 +4,10 @@ import imagenes.modelo.Imagen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class ImagenPanel extends JPanel {
+public class ImagenPanel extends JPanel implements PropertyChangeListener  {
     private Imagen modelo;
 
     public ImagenPanel(Imagen img) {
@@ -21,5 +23,16 @@ public class ImagenPanel extends JPanel {
         super.paintComponent(g);
 
         modelo.dibujar(g);
+    }
+
+    public void setModelo(Imagen modelo) {
+        this.modelo = modelo;
+        this.modelo.addObserver(this);
+        repaint();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        this.repaint();
     }
 }
