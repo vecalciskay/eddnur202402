@@ -1,12 +1,13 @@
 package imagenes.modelo.operaciones;
 
 import imagenes.modelo.Imagen;
+import imagenes.modelo.ParametrosOperacion;
 import imagenes.modelo.excepciones.ImagenException;
 
 public class Aclarar implements IOperacionImagen {
 
     @Override
-    public void hacer(Imagen img) throws ImagenException {
+    public void hacer(Imagen img, ParametrosOperacion parametros) throws ImagenException {
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 int[] pixelrgb = img.getRgb(i,j);

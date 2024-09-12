@@ -1,9 +1,7 @@
 package imagenes.modelo;
 
 import imagenes.modelo.excepciones.ImagenException;
-import imagenes.modelo.operaciones.Aclarar;
 import imagenes.modelo.operaciones.IOperacionImagen;
-import imagenes.vista.ImagenPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,8 +10,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Imagen {
+public class Imagen implements Serializable {
+    private static final org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getRootLogger();
     private int[][] pixeles;
     private int width;
     private int height;
@@ -33,6 +33,8 @@ public class Imagen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (bi == null) return;
+
         width = bi.getWidth();
         height = bi.getHeight();
 
@@ -90,7 +92,6 @@ public class Imagen {
 
         // En Hex: 37, b7, d2
         red = 55; green = 183; blue = 210;
-        color = 0;
         red = red << 16;
         green = green << 8;
         // En hexadecimal:  3    7    b    7     d   2
@@ -130,22 +131,32 @@ public class Imagen {
         int bc = b;
         pixeles[x][y] = rc | gc | bc;
     }
+    public void setRgb(int x, int y, int rgb) {
+        pixeles[x][y] = rgb;
+    }
 
     public void operacionCompletada() {
+        logger.debug("Operacion completada, notificar observers");
         observado.firePropertyChange("OPERACION", true, false);
     }
 
-    public void operacion(IOperacionImagen operacion) {
+    public void operacion(IOperacionImagen objOperacion) {
+        operacion(objOperacion, null);
+    }
+
+    public void operacion(IOperacionImagen objOperacion, ParametrosOperacion parametros) {
         try {
-            operacion.hacer(this);
+            objOperacion.hacer(this, parametros);
         } catch (ImagenException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
 
         operacionCompletada();
     }
 
-    public void setPixeles(int[][] pixeles) {
+    public void setPixeles(int ancho, int alto, int[][] pixeles) {
+        this.width = ancho;
+        this.height = alto;
         this.pixeles = pixeles;
     }
 }

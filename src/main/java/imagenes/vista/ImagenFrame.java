@@ -6,12 +6,12 @@ import imagenes.modelo.operaciones.Aclarar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 public class ImagenFrame extends JFrame {
-    private Imagen modelo;
+    private static final org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getRootLogger();
+
+    private transient Imagen modelo;
     private ImagenPanel panel;
     public ImagenFrame() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,35 +41,44 @@ public class ImagenFrame extends JFrame {
         JMenu mnu = new JMenu("Archivo");
         
         JMenuItem item = new JMenuItem("Cargar imagen");
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mnuArchivo_cargarImagen();
-            }
-        });
+        item.addActionListener(e -> mnuArchivoItemCargarImagen());
+        mnu.add(item);
+
+        mnu.addSeparator();
+
+        item = new JMenuItem("Salir");
+        item.addActionListener(e -> mnuArchivoItemSalir());
         mnu.add(item);
         
+        bar.add(mnu);
+
+        // Menu Vista
+        mnu = new JMenu("Vista");
+
+        item = new JMenuItem("Ajustar");
+        item.addActionListener(e -> mnuVistaItemAjustar());
+        mnu.add(item);
+
         bar.add(mnu);
 
         // Menu Imagen
         mnu = new JMenu("Imagen");
 
         item = new JMenuItem("Aclarar");
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mnuImagen_Aclarar();
-            }
-        });
+        item.addActionListener(e -> mnuImagenItemAclarar());
         mnu.add(item);
 
         item = new JMenuItem("Achicar x 2");
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mnuImagen_AchicarX2();
-            }
-        });
+        item.addActionListener(e -> mnuImagenItemAchicarX2());
+        mnu.add(item);
+
+        bar.add(mnu);
+
+        // Menu Herramientas
+        mnu = new JMenu("Herramientas");
+
+        item = new JMenuItem("Icono / Emoji");
+        item.addActionListener(e -> mnuImagenItemIconoEmoji());
         mnu.add(item);
 
         bar.add(mnu);
@@ -77,16 +86,29 @@ public class ImagenFrame extends JFrame {
         this.setJMenuBar(bar);
     }
 
-    private void mnuImagen_Aclarar() {
+    private void mnuImagenItemIconoEmoji() {
+        logger.info("Icono / Emoji");
+        panel.herramientaSeleccionada();
+    }
+
+    private void mnuArchivoItemSalir() {
+        logger.info("Saliendo de la aplicación");
+        System.exit(0);
+    }
+
+    private void mnuVistaItemAjustar() {
+        this.pack();
+    }
+
+    private void mnuImagenItemAclarar() {
         modelo.operacion(new Aclarar());
     }
-    private void mnuImagen_AchicarX2() {
+    private void mnuImagenItemAchicarX2() {
         modelo.operacion(new AchicarX2());
     }
 
-    private void mnuArchivo_cargarImagen() {
+    private void mnuArchivoItemCargarImagen() {
         JFileChooser fileChooser = new JFileChooser();
-        //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
