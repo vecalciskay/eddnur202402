@@ -1,5 +1,6 @@
 package imagenes.vista;
 
+import imagenes.modelo.Histograma;
 import imagenes.modelo.Imagen;
 import imagenes.modelo.operaciones.*;
 
@@ -58,6 +59,10 @@ public class ImagenFrame extends JFrame {
         item.addActionListener(e -> mnuVistaItemAjustar());
         mnu.add(item);
 
+        item = new JMenuItem("Histograma");
+        item.addActionListener(e -> mnuVistaItemHistograma());
+        mnu.add(item);
+
         bar.add(mnu);
 
         // Menu Imagen
@@ -95,6 +100,19 @@ public class ImagenFrame extends JFrame {
         bar.add(mnu);
 
         this.setJMenuBar(bar);
+    }
+
+    private void mnuVistaItemHistograma() {
+        JDialog dialog = new JDialog(this, "Histograma", false);
+        dialog.setResizable(false);
+        Histograma histograma = new Histograma();
+        histograma.calcular(modelo);
+
+        HistogramaPanel ph = new HistogramaPanel(histograma);
+
+        dialog.getContentPane().add(ph);
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     private void mnuImagenItemPasoBajo() { modelo.operacion(new FiltroPasoBajo()); }
