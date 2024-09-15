@@ -1,8 +1,7 @@
 package imagenes.vista;
 
 import imagenes.modelo.Imagen;
-import imagenes.modelo.operaciones.AchicarX2;
-import imagenes.modelo.operaciones.Aclarar;
+import imagenes.modelo.operaciones.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,6 +71,18 @@ public class ImagenFrame extends JFrame {
         item.addActionListener(e -> mnuImagenItemAchicarX2());
         mnu.add(item);
 
+        item = new JMenuItem("Grises");
+        item.addActionListener(e -> mnuImagenItemGrises());
+        mnu.add(item);
+
+        item = new JMenuItem("Paso Bajo");
+        item.addActionListener(e -> mnuImagenItemPasoBajo());
+        mnu.add(item);
+
+        item = new JMenuItem("Bordes Sobel");
+        item.addActionListener(e -> mnuImagenItemBordesSobel());
+        mnu.add(item);
+
         bar.add(mnu);
 
         // Menu Herramientas
@@ -85,6 +96,12 @@ public class ImagenFrame extends JFrame {
 
         this.setJMenuBar(bar);
     }
+
+    private void mnuImagenItemPasoBajo() { modelo.operacion(new FiltroPasoBajo()); }
+
+    private void mnuImagenItemBordesSobel() { modelo.operacion(new BordesSobel()); }
+
+    private void mnuImagenItemGrises() { modelo.operacion(new ConvertirAGris());}
 
     private void mnuImagenItemIconoEmoji() {
         logger.info("Icono / Emoji");

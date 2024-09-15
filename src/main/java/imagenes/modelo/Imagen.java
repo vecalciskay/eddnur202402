@@ -118,6 +118,11 @@ public class Imagen implements Serializable {
 
     public int[] getRgb(int i, int j) {
         int[] result = new int[3];
+
+        if (i < 0 || i >= width || j < 0 || j >= height) {
+            return result;
+        }
+
         result[2] = 0x000000ff & pixeles[i][j];
         result[1] = (0x0000ff00 & pixeles[i][j]) >> 8;
         result[0] = (0x00ff0000 & pixeles[i][j]) >> 16;

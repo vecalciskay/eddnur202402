@@ -9,6 +9,8 @@ import java.awt.*;
 public class ParametrosOperacion {
     private int x0;
     private int y0;
+    private int[][] kernel;
+    private int kernelDivisor;
     private Color color;
 
     public ParametrosOperacion() {
@@ -41,5 +43,21 @@ public class ParametrosOperacion {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public int[][] getKernel() {
+        return kernel;
+    }
+
+    public void setKernel(int[][] kernel) {
+        this.kernel = kernel;
+    }
+
+    public int getKernelDivisor() {
+        return kernelDivisor;
+    }
+
+    public void setKernelDivisor(int kernelDivisor) {
+        this.kernelDivisor = kernelDivisor;
     }
 }
