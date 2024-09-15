@@ -38,5 +38,5 @@ barra de herramientas en la parte derecha de la ventana.
 
 ## Fecha de entrega
 
-La fecha de entrega es el viernes 20 de Septiembre de 2024
+La fecha de entrega es el viernes 27 de Septiembre de 2024
 
