@@ -1,10 +1,10 @@
-package cadena;
+package cadena.iterator;
 
 public class CadenaIterator<T> implements IIterator<T> {
-    private Cadena<T> cadena;
+    private CadenaWrapper<T> cadena;
     private int posicionActual;
 
-    public CadenaIterator(Cadena<T> cadena) {
+    public CadenaIterator(CadenaWrapper<T> cadena) {
         this.cadena = cadena;
         this.posicionActual = 0;
     }

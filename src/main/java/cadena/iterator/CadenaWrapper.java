@@ -1,9 +1,9 @@
-package cadena;
+package cadena.iterator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cadena<T> implements IIterable<T> {
+public class CadenaWrapper<T> implements IIterable<T> {
     private List<T> coleccion;
 
     @Override
@@ -11,7 +11,7 @@ public class Cadena<T> implements IIterable<T> {
         return new CadenaIterator(this);
     }
 
-    public Cadena() {
+    public CadenaWrapper() {
         this.coleccion = new ArrayList<>();
     }
 

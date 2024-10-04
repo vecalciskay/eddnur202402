@@ -1,8 +1,8 @@
-package cadena;
+package cadena.iterator;
 
 public class App {
     public static void main(String[] args) {
-        Cadena numeros = new Cadena();
+        CadenaWrapper numeros = new CadenaWrapper();
         numeros.agregarNodo(1);
         numeros.agregarNodo("hola");
         numeros.agregarNodo(true);

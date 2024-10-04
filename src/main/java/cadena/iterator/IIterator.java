@@ -1,4 +1,4 @@
-package cadena;
+package cadena.iterator;
 
 public interface IIterator<T> {
 
