@@ -5,18 +5,29 @@ import cadena.vista.ListaJPanel;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Iterator;
 
-public class Lista<E> {
-    private Nodo<E> raiz;
-    private int tam = 0;
+public class Lista<E> implements Iterable<E>{
+    protected Nodo<E> raiz;
+    protected int tam = 0;
     private PropertyChangeSupport supportObserver;
     private static final String OBSERVER_TAMANO = "TAMANO";
+
 
     public Lista() {
         supportObserver = new PropertyChangeSupport(this);
     }
 
     public void insertar(E valor) {
+        Nodo<E> nuevo = new Nodo<>(valor);
+        nuevo.setSiguiente(raiz);
+        raiz = nuevo;
+        tam++;
+        supportObserver.firePropertyChange(
+                OBSERVER_TAMANO, tam, tam + 1);
+    }
+
+    public void adicionar(E valor) {
         if (raiz == null) {
             raiz = new Nodo<>(valor);
             tam++;
@@ -124,6 +135,24 @@ public class Lista<E> {
         System.out.println(listaPrueba);
         int elementoPos2 = listaPrueba.obtener(2);
         System.out.println(elementoPos2);
+
+        System.out.println("FOR");
+        for (int i = 0; i < listaPrueba.getTam(); i++) {
+            System.out.println(listaPrueba.obtener(i));
+        }
+
+        System.out.println("WHILE");
+        Iterator<Integer> iter = listaPrueba.iterator();
+        while(iter.hasNext()) {
+            Integer valInt = iter.next();
+            System.out.println(valInt);
+        }
+
+        System.out.println("FOREACH");
+        for (Integer valInt: listaPrueba) {
+            System.out.println(valInt);
+        }
+
         System.out.println(listaPrueba.obtener(3));
 //        System.out.println(listaPrueba.obtener(5));
 //        listaPrueba.eliminar(2);
@@ -135,19 +164,19 @@ public class Lista<E> {
         System.out.println(listaPrueba);
         listaPrueba.eliminar(0);
         System.out.println(listaPrueba);
-        listaPrueba.eliminar(4);
-        System.out.println(listaPrueba);
+        //listaPrueba.eliminar(4);
+        //System.out.println(listaPrueba);
 
 
-//        Lista<String> listaStrings = new Lista<>();
-//        listaStrings.insertar("Hola");
-//        listaStrings.insertar("mundo");
-//        listaStrings.insertar("chau");
-//        System.out.println(listaStrings);
 
     }
 
     public void addObserver(PropertyChangeListener observer) {
         supportObserver.addPropertyChangeListener(observer);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new IteradorLista<>(this);
     }
 }
