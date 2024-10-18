@@ -1,6 +1,6 @@
 package comparadores;
 
-public class Materia {
+public class Materia implements Comparable<Materia>{
     private String nombre;
     private String codigo;
     private int creditos;
@@ -33,5 +33,17 @@ public class Materia {
 
     public void setCreditos(int creditos) {
         this.creditos = creditos;
+    }
+
+    @Override
+    public String toString() {
+        return codigo + " - " + nombre + "(" + creditos + ")";
+    }
+
+    @Override
+    public int compareTo(Materia o) {
+        if (this.getNombre().equals(o.getNombre()))
+            return 0;
+        return this.getNombre().compareTo(o.getNombre());
     }
 }
