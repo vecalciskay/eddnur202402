@@ -1,5 +1,7 @@
 package cadena.models;
 
+import java.awt.*;
+
 public class Nodo<E> {
     private E valor;
     private Nodo<E> siguiente;
@@ -27,5 +29,11 @@ public class Nodo<E> {
     @Override
     public String toString() {
         return valor + " -> ";
+    }
+
+    public void dibujar(Graphics g, int posX, int posY) {
+        g.drawRect(posX, posY, 100, 50);
+        g.setFont(new Font("Serif", Font.PLAIN, 18));
+        g.drawString(valor.toString(), posX + 40, posY + 30);
     }
 }

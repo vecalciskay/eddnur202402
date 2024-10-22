@@ -1,5 +1,8 @@
 package cadena.models;
 
+import cadena.vista.ListaJPanel;
+
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
 
@@ -157,11 +160,15 @@ public class ListaDoble<E> implements Iterable<E> {
         return builder.toString();
     }
 
+    public void addObserver(PropertyChangeListener observer) {
+        supportObserver.addPropertyChangeListener(observer);
+    }
+
     /**
      * En realidad se llama ListaDoble.Nodo
      * @param <E>
      */
-    class Nodo<E> {
+    static class Nodo<E> {
         private E valor;
         private Nodo<E> siguiente;
         private Nodo<E> anterior;

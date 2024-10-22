@@ -29,7 +29,7 @@ public class BuscarEnArreglo {
     }
 
     private static String buscarEnOrdenada(String o, ListaDoble<String> listaOrdenada) {
-        return busqeudaDicotomica(o, listaOrdenada,
+        return busquedaDicotomica(o, listaOrdenada,
                 0, listaOrdenada.getTam()-1 );
     }
 
@@ -41,7 +41,7 @@ public class BuscarEnArreglo {
      * @param posF
      * @return
      */
-    public static String busqeudaDicotomica(String o,
+    public static String busquedaDicotomica(String o,
                                             ListaDoble<String> lista,
                                             int pos0, int posF) {
         boolean encontre = false;
@@ -68,15 +68,15 @@ public class BuscarEnArreglo {
             return encontrado;
         }
         if (elementoMitad.compareTo(o) < 0) {
-            encontrado = busqeudaDicotomica(o, lista, mitad, posF);
+            encontrado = busquedaDicotomica(o, lista, mitad, posF);
             return encontrado;
         }
-        encontrado = busqeudaDicotomica(o, lista, pos0, mitad);
+        encontrado = busquedaDicotomica(o, lista, pos0, mitad);
         return encontrado;
     }
 
     /**
-     * La compleidad de este algoritmo de busqueda es O(n)=n
+     * La complejidad de este algoritmo de busqueda es O(n)=n
      * @param o
      * @param lista
      * @return
