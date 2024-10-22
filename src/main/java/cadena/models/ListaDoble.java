@@ -8,8 +8,8 @@ public class ListaDoble<E> implements Iterable<E> {
     protected Nodo<E> raiz;
     protected Nodo<E> cola;
     protected int tam = 0;
-    private PropertyChangeSupport supportObserver;
-    private static final String OBSERVER_TAMANO = "TAMANO";
+    protected PropertyChangeSupport supportObserver;
+    protected static final String OBSERVER_TAMANO = "TAMANO";
     public ListaDoble() {
         raiz = null;
         cola = null;
