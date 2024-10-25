@@ -1,10 +1,13 @@
 package tablasDeHash;
 
-public class TablaHashString {
-    private Identificable[] tabla;
+import cadena.models.Lista;
 
-    public TablaHashString() {
-        tabla = new Identificable[26 * (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10) + 10];
+public class TablaHashManejoColision {
+    private Lista<Identificable>[] tabla;
+    private int tam;
+
+    public TablaHashManejoColision() {
+        tabla = new Lista[26 * (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10) + 10];
     }
 
     /**
@@ -53,27 +56,60 @@ public class TablaHashString {
             // error
             return;
         }
-
-        tabla[hash] = o;
-    }
-
-    public void eliminar(String id) {
-        int hash = miFuncionHash(id);
-        if (hash < 0) {
-            // error
-            return;
+        if (tabla[hash] == null) {
+            tabla[hash] = new Lista<>();
         }
-        tabla[hash] = null;
+        for (int i = 0; i < tabla[hash].getTam(); i++) {
+            Identificable elemento = tabla[hash].obtener(i);
+            if (elemento.getId().equals(o.getId())) {
+                tabla[hash].insertar(i, elemento);
+                return;
+            }
+        }
+        tabla[hash].insertar(o);
+        tam++;
     }
 
     public Identificable encontrar(String id) {
         int hash = miFuncionHash(id);
-        return tabla[hash];
+        if (tabla[hash] == null) {
+            return null;
+        }
+        for (int i = 0; i < tabla[hash].getTam(); i++) {
+            Identificable elemento = tabla[hash].obtener(i);
+            if (elemento.getId().equals(id)) {
+                return elemento;
+            }
+        }
+        return null;
+    }
+
+    public void eliminar(String id) {
+        int hash = miFuncionHash(id);
+        if (tabla[hash] == null) {
+            return;
+        }
+        for (int i = 0; i < tabla[hash].getTam(); i++) {
+            Identificable elemento = tabla[hash].obtener(i);
+            if (elemento.getId().equals(id)) {
+                tabla[hash].eliminar(i);
+                return;
+            }
+        }
     }
 
     public boolean existeLlave(String id) {
         int hash = miFuncionHash(id);
-        return tabla[hash] != null;
+        if (tabla[hash] == null) {
+            return false;
+        }
+        for (int i = 0; i < tabla[hash].getTam(); i++) {
+            Identificable elemento = tabla[hash].obtener(i);
+            if (elemento.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -87,5 +123,9 @@ public class TablaHashString {
                     .append(" -> ");
         }
         return result.toString();
+    }
+
+    public int getTam() {
+        return tam;
     }
 }

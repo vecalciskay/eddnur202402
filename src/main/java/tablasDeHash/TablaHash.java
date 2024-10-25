@@ -1,10 +1,10 @@
 package tablasDeHash;
 
-public class TablaHashString {
-    private Identificable[] tabla;
+public class TablaHash<K> {
+    private IdentificableGeneric<K>[] tabla;
 
-    public TablaHashString() {
-        tabla = new Identificable[26 * (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10) + 10];
+    public TablaHash() {
+        tabla = new IdentificableGeneric[26 * (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10) + 10];
     }
 
     /**
@@ -27,10 +27,11 @@ public class TablaHashString {
      * Hash = 14 + 10 + 57 + 4 + 95
      * Hash = 180
      *
-     * @param palabra
+     * @param llave
      * @return the hash of a word with this algorithm
      */
-    public int miFuncionHash(String palabra) {
+    public int miFuncionHash(K llave) {
+        String palabra = llave.toString();
         if (palabra.length() > 10)
             return -1;
         int valorLetra = 0;
@@ -47,7 +48,7 @@ public class TablaHashString {
         return hash;
     }
 
-    public void insertar(Identificable o) {
+    public void insertar(IdentificableGeneric<K> o) {
         int hash = miFuncionHash(o.getId());
         if (hash < 0) {
             // error
@@ -57,7 +58,7 @@ public class TablaHashString {
         tabla[hash] = o;
     }
 
-    public void eliminar(String id) {
+    public void eliminar(K id) {
         int hash = miFuncionHash(id);
         if (hash < 0) {
             // error
@@ -66,12 +67,12 @@ public class TablaHashString {
         tabla[hash] = null;
     }
 
-    public Identificable encontrar(String id) {
+    public IdentificableGeneric encontrar(K id) {
         int hash = miFuncionHash(id);
         return tabla[hash];
     }
 
-    public boolean existeLlave(String id) {
+    public boolean existeLlave(K id) {
         int hash = miFuncionHash(id);
         return tabla[hash] != null;
     }

@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Iterator;
 
-public class Lista<E> implements Iterable<E>{
+public class Lista<E> implements Iterable<E> {
     protected Nodo<E> raiz;
     protected int tam = 0;
     private PropertyChangeSupport supportObserver;
@@ -110,6 +110,16 @@ public class Lista<E> implements Iterable<E>{
         return builder.toString();
     }
 
+    public void insertar(int pos, E valor) {
+        Nodo<E> actual = raiz;
+        int count = 0;
+        while (actual != null && count != pos) {
+            count++;
+            actual = actual.getSiguiente();
+        }
+        actual.setValor(valor);
+    }
+
     public Nodo<E> getRaiz() {
         return raiz;
     }
@@ -143,13 +153,13 @@ public class Lista<E> implements Iterable<E>{
 
         System.out.println("WHILE");
         Iterator<Integer> iter = listaPrueba.iterator();
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             Integer valInt = iter.next();
             System.out.println(valInt);
         }
 
         System.out.println("FOREACH");
-        for (Integer valInt: listaPrueba) {
+        for (Integer valInt : listaPrueba) {
             System.out.println(valInt);
         }
 
@@ -166,7 +176,6 @@ public class Lista<E> implements Iterable<E>{
         System.out.println(listaPrueba);
         //listaPrueba.eliminar(4);
         //System.out.println(listaPrueba);
-
 
 
     }
