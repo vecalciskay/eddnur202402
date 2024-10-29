@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Arbol<E extends Identificable> {
     private NodoArbol<E> raiz;
-    private HashMap<String, NodoArbol<E>> nodos;
+    private HashMap<String, NodoArbol<E>> nodos = new HashMap<>();
 
     public Arbol() {
         raiz = null;
@@ -25,7 +25,7 @@ public class Arbol<E extends Identificable> {
         if (padre == null) {
             throw new IllegalArgumentException("No se encontró el padre con id " + idPadre);
         }
-        padre.getHijos().insertar(nuevo);
+        padre.agregarHijo(nuevo);
         nodos.put(valor.getId(), nuevo);
     }
 
@@ -34,21 +34,23 @@ public class Arbol<E extends Identificable> {
         return nodo;
     }
 
-    public String recorrerInOrden() {
-        return recorrerInOrden(raiz);
+    public String recorrerPostOrden() {
+        return recorrerPostOrden(raiz);
     }
 
-    private String recorrerInOrden(NodoArbol<E> nodo) {
+    private String recorrerPostOrden(NodoArbol<E> nodo) {
         if (nodo == null) {
             return "[NODO NULO]";
         }
         StringBuilder sb = new StringBuilder();
         sb.append(nodo.getValor().getId());
-        sb.append(" (");
-        for(NodoArbol<E> hijo : nodo.getHijos()) {
-            sb.append(hijo).append(",");
+        if (nodo.getHijos().getTam() > 0) {
+            sb.append(" (");
+            for (NodoArbol<E> hijo : nodo.getHijos()) {
+                sb.append(recorrerPostOrden(hijo)).append(",");
+            }
+            sb.append(")");
         }
-        sb.append(")");
         return sb.toString();
     }
 

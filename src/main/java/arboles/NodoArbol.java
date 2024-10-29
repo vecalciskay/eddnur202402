@@ -18,4 +18,12 @@ public class NodoArbol<E extends Identificable> {
     public Lista<NodoArbol<E>> getHijos() {
         return hijos;
     }
+    public void agregarHijo(NodoArbol<E> hijo){
+        this.hijos.insertar(hijo);
+    }
+
+    @Override
+    public String toString() {
+        return this.getValor().toString();
+    }
 }
