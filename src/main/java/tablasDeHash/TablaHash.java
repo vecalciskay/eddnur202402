@@ -27,6 +27,13 @@ public class TablaHash<K> {
      * Hash = 14 + 10 + 57 + 4 + 95
      * Hash = 180
      *
+     * b  2*1
+     * A  1*2  + 1      f(bA) = 5
+     *
+     * a  1*1
+     * b  2*2           f(ab) = 5
+     *
+     *
      * @param llave
      * @return the hash of a word with this algorithm
      */

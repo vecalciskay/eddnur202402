@@ -46,12 +46,17 @@ public class Arbol<E extends Identificable> {
         sb.append(nodo.getValor().getId());
         if (nodo.getHijos().getTam() > 0) {
             sb.append(" (");
+            String separador = "";
             for (NodoArbol<E> hijo : nodo.getHijos()) {
-                sb.append(recorrerPostOrden(hijo)).append(",");
+                sb.append(separador).append(recorrerPostOrden(hijo));
+                separador = ",";
             }
             sb.append(")");
         }
         return sb.toString();
     }
 
+    public NodoArbol<E> getRaiz() {
+        return raiz;
+    }
 }
