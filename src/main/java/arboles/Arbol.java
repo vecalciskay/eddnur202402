@@ -59,4 +59,36 @@ public class Arbol<E extends Identificable> {
     public NodoArbol<E> getRaiz() {
         return raiz;
     }
+
+    public NodoArbol<E> puntoDentroDeNodo(int x, int y) {
+        NodoArbol<E> nodo = raiz;
+
+        NodoArbol<E> encontrado = puntoDentroDeNodoRecursivo(nodo, x, y);
+
+        return encontrado;
+    }
+
+    private NodoArbol<E> puntoDentroDeNodoRecursivo(NodoArbol<E> nodo, int x, int y) {
+        int r2 = nodo.getTamano() * nodo.getTamano();
+        int posX_circulo = (int)Math.pow(x - nodo.getX(), 2);
+        int posY_circulo = (int)Math.pow(y - nodo.getY(), 2);
+        /*if (x > (nodo.getX() - nodo.getTamano()) &&
+                x < (nodo.getX() + nodo.getTamano()) &&
+                y > (nodo.getY() - nodo.getTamano()) &&
+                y < (nodo.getY() + nodo.getTamano())) {*/
+        if ((posX_circulo + posY_circulo) < r2)
+            return nodo;
+
+        if (nodo.getHijos().getTam() == 0) {
+            return null;
+        }
+        NodoArbol<E> encontrado = null;
+        for (NodoArbol<E> hijo: nodo.getHijos()) {
+            encontrado = puntoDentroDeNodoRecursivo(hijo, x, y);
+            if (encontrado != null) {
+                return encontrado;
+            }
+        }
+        return null;
+    }
 }

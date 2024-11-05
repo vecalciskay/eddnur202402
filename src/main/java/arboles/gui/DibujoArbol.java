@@ -9,9 +9,9 @@ import java.awt.*;
 public class DibujoArbol {
     private Arbol<NumeroIdentificable> modelo;
     private Graphics grafico;
-    private static final int ESPACIO_VERTICAL = 60;
-    private static final int ESPACIO_HORIZONTAL = 15;
-    private static final int TAMANO_NODO = 30;
+    private static final int ESPACIO_VERTICAL = 90;
+    private static final int ESPACIO_HORIZONTAL = 20;
+    private static final int TAMANO_NODO = 50;
 
     public DibujoArbol(Arbol<NumeroIdentificable> modelo) {
         this.modelo = modelo;
@@ -26,17 +26,21 @@ public class DibujoArbol {
 
     private void dibujarRecursivo(NodoArbol<NumeroIdentificable> nodo, int x, int y) {
         int ancho = getAncho(nodo);
-        dibujarNodo(nodo, x + ancho / 2, y);
 
         int yHijo = y + ESPACIO_VERTICAL;
         int xHijo = x;
-        int separador = 0;
+        int separador = ESPACIO_HORIZONTAL;
         for (NodoArbol<NumeroIdentificable> hijo: nodo.getHijos() ){
             int anchoHijo = getAncho(hijo);
+
+            grafico.drawLine(x + ancho / 2 , y + TAMANO_NODO / 2,
+                    xHijo + anchoHijo / 2, yHijo + TAMANO_NODO / 2);
             dibujarRecursivo(hijo, xHijo, yHijo);
-            xHijo += (separador + anchoHijo);
-            separador = ESPACIO_HORIZONTAL;
+
+            xHijo += (anchoHijo + separador);
         }
+
+        dibujarNodo(nodo, x + ancho / 2 -  TAMANO_NODO / 2, y);
     }
 
     private int getAncho(NodoArbol<NumeroIdentificable> nodo) {
@@ -56,8 +60,21 @@ public class DibujoArbol {
     }
 
     private void dibujarNodo(NodoArbol<NumeroIdentificable> nodo, int x, int y) {
+
+        nodo.setX(x + TAMANO_NODO / 2);
+        nodo.setY(y + TAMANO_NODO / 2);
+        nodo.setTamano(TAMANO_NODO/2);
+
+        grafico.setColor(Color.white);
+        grafico.fillArc(x, y, TAMANO_NODO, TAMANO_NODO, 0, 360);
+        grafico.setColor(Color.black);
         grafico.drawArc(x, y, TAMANO_NODO, TAMANO_NODO, 0, 360);
+
         grafico.setFont(new Font("Arial", Font.PLAIN, 18));
-        grafico.drawString(nodo.getValor().toString(), x + 7, y + 20);
+        if (nodo.getValor().toString().length() > 1) {
+            grafico.drawString(nodo.getValor().toString(), x + 4, y + 22);
+        } else {
+            grafico.drawString(nodo.getValor().toString(), x + 10, y + 22);
+        }
     }
 }

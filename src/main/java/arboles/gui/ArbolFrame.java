@@ -34,6 +34,8 @@ public class ArbolFrame extends JFrame {
 
         arbol.insertar(new NumeroIdentificable(2), "4");
         arbol.insertar(new NumeroIdentificable(7), "4");
+        arbol.insertar(new NumeroIdentificable(6), "4");
+        arbol.insertar(new NumeroIdentificable(10), "4");
 
         arbol.insertar(new NumeroIdentificable(9), "5");
 
