@@ -11,4 +11,20 @@ public abstract class SimboloOperacion implements IObjetoAlgebraico {
     public String toString() {
         return simbolo;
     }
+
+    public static SimboloOperacion leerSimbolo(String operacion) throws AritmeticaException {
+        switch(operacion) {
+            case "+":
+                return new SimboloOperacionAdicion();
+            case "-":
+                return new SimboloOperacionSustraccion();
+            case "*":
+                return new SimboloOperacionMultiplicacion();
+            case "/":
+                return new SimboloOperacionDivision();
+            default:
+                String msg = "El simbolo " + operacion + " no se reconoce";
+                throw new AritmeticaException(msg);
+        }
+    }
 }
