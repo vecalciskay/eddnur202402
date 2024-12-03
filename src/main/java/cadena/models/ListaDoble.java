@@ -168,7 +168,7 @@ public class ListaDoble<E> implements Iterable<E> {
      * En realidad se llama ListaDoble.Nodo
      * @param <E>
      */
-    static class Nodo<E> {
+    class Nodo<E> {
         private E valor;
         private Nodo<E> siguiente;
         private Nodo<E> anterior;

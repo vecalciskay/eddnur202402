@@ -132,4 +132,8 @@ public class ArbolAritmetico {
     public double evaluar() throws AritmeticaException{
         return raiz.evaluar();
     }
+
+    public int contarNodos() {
+        return raiz.contarNodos();
+    }
 }

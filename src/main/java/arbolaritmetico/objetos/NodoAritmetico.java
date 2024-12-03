@@ -62,4 +62,11 @@ public class NodoAritmetico {
 
         return contenido.getValor(arg1, arg2);
     }
+
+    public int contarNodos() {
+        if (izquierda == null && derecha == null) {
+            return 1;
+        }
+        return 1 + izquierda.contarNodos() + derecha.contarNodos();
+    }
 }
