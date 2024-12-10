@@ -31,10 +31,9 @@ public class TestConexion {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
             while(result.next()) {
-                System.out.println("id: " + result.getString("id"));
+                System.out.println("id: " + result.getInt("id"));
                 System.out.println("nombre: " + result.getString("nombre"));
-                System.out.println("edad: " + result.getString("edad"));
-                System.out.println("email: " + result.getString("email"));
+                System.out.println("edad: " + result.getInt("edad"));
                 System.out.println("--------------");
             }
         } catch (SQLException e) {
@@ -43,8 +42,8 @@ public class TestConexion {
     }
 
     private static void conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/edd";
-        String username = "root";
+        String url = "jdbc:postgresql://localhost:5432/edd";
+        String username = "postgres";
         String password = "aaaaaa";
 
         System.out.println("Connecting database ...");
